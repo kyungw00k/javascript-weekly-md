@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "javascript-weekly-md"
+version = "0.1.0"
+description = "Fetch JavaScript Weekly issues and save issue-page Markdown."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+javascript-weekly-md = "javascript_weekly_md.archive:main"
+
+[tool.setuptools.packages.find]
+include = ["javascript_weekly_md*"]

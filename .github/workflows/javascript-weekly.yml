@@ -1,0 +1,135 @@
+name: Archive JavaScript Weekly Markdown
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "30 13 * * 2"
+  workflow_dispatch:
+    inputs:
+      newsletter_url:
+        description: "Specific JavaScript Weekly issue URL. Leave empty to archive listed issues."
+        required: false
+        type: string
+      archive_year:
+        description: "Archive only listed issues from this year. Leave empty to archive every listed year."
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: javascript-weekly-md-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Verify JavaScript Weekly sources
+        run: |
+          python3 - <<'PY'
+          from urllib.request import Request, urlopen
+
+          sources = [
+              ("https://cprss.s3.amazonaws.com/javascriptweekly.com.xml", (b"<rss", b"<?xml")),
+              ("https://javascriptweekly.com/issues", (b"Archives", b"Issue #")),
+          ]
+          for url, expected_markers in sources:
+              request = Request(
+                  url,
+                  headers={"User-Agent": "javascript-weekly-md/0.1 (+https://javascriptweekly.com/)"},
+              )
+              with urlopen(request, timeout=30) as response:
+                  status = response.status
+                  prefix = response.read(4096)
+
+              if status >= 400:
+                  raise SystemExit(f"{url} returned HTTP {status}")
+              if not any(marker in prefix for marker in expected_markers):
+                  raise SystemExit(f"{url} did not look like the expected JavaScript Weekly source")
+              print(f"{url} reachable with HTTP {status}")
+          PY
+
+      - name: Run tests
+        run: python3 -m unittest discover -s tests
+
+      - name: Generate Markdown archive entries
+        id: archive
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          newsletter_url=""
+          archive_year=""
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            newsletter_url=$(python3 -c 'import json, os; print(json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8")).get("inputs", {}).get("newsletter_url", ""))')
+            archive_year=$(python3 -c 'import json, os; print(json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8")).get("inputs", {}).get("archive_year", ""))')
+          fi
+
+          if [ -n "$newsletter_url" ]; then
+            python3 -m javascript_weekly_md.archive --url "$newsletter_url"
+          elif [ -n "$archive_year" ]; then
+            python3 -m javascript_weekly_md.archive --all --year "$archive_year"
+          else
+            python3 -m javascript_weekly_md.archive --all
+          fi
+
+          if [ -n "$(git status --porcelain -- newsletters/javascript-weekly/weekly)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Markdown archive changed."
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No Markdown archive changes."
+          fi
+
+      - name: Commit generated Markdown
+        if: steps.archive.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add newsletters/javascript-weekly/weekly
+
+          if git diff --cached --quiet; then
+            echo "No generated Markdown changes to commit."
+            exit 0
+          fi
+
+          commit_message=$(mktemp)
+          cat > "$commit_message" <<'EOF'
+          Preserve JavaScript Weekly issue pages as Markdown
+
+          Constraint: External GitHub-hosted runner must fetch JavaScript Weekly over public internet
+          Rejected: Rendering RSS descriptions as canonical body | issue pages can differ from RSS content
+          Confidence: high
+          Scope-risk: narrow
+          Directive: Keep workflow limited to RSS/archive discovery, issue-page fetch, Markdown generation, and archive commit.
+          Tested: python3 -m unittest discover -s tests; JavaScript Weekly source network check
+          Not-tested: GitHub scheduled run in the remote repository
+          EOF
+
+          git commit -F "$commit_message"
+
+          git push
+
+      - name: No archive changes
+        if: steps.archive.outputs.changed != 'true'
+        run: echo "No new JavaScript Weekly Markdown file found."

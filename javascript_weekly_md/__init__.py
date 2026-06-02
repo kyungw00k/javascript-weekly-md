@@ -1,0 +1,1 @@
+"""JavaScript Weekly Markdown archiver."""
