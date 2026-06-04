@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-06-02 - JavaScript Weekly Issue 788: June 2, 2026](2026-06-02.md)
 - [2026-05-26 - JavaScript Weekly Issue 787: May 26, 2026](2026-05-26.md)
 - [2026-05-19 - JavaScript Weekly Issue 786: May 19, 2026](2026-05-19.md)
 - [2026-05-12 - JavaScript Weekly Issue 785: May 12, 2026](2026-05-12.md)
