@@ -89,9 +89,21 @@ class JavaScriptWeeklyTests(unittest.TestCase):
             """\
             <section class="contained">
               <div class="issues">
-                <div class="issue"><a href="issues/787">Issue #787</a> &mdash; May 26, 2026</div>
-                <div class="issue"><a href="/issues/786">Issue #786</a> &mdash; May 19, 2026</div>
-                <div class="issue"><a href="issues/766">Issue #766</a> &mdash; December 19, 2025</div>
+                <div class="issue-card">
+                  <span class="issue-ref">#787</span>
+                  <span class="issue-subject"><a href="/issues/787">npm and pnpm introduce staged publishing</a></span>
+                  <span class="issue-date">2026-05-26</span>
+                </div>
+                <div class="issue-card">
+                  <span class="issue-ref">#786</span>
+                  <span class="issue-subject"><a href="/issues/786">Dr. Axel's blog is gone for now</a></span>
+                  <span class="issue-date">2026-05-19</span>
+                </div>
+                <div class="issue-card">
+                  <span class="issue-ref">#766</span>
+                  <span class="issue-subject"><a href="/issues/766">WebGPU compilation pipelines</a></span>
+                  <span class="issue-date">2025-12-19</span>
+                </div>
               </div>
             </section>
             """
@@ -221,8 +233,16 @@ class JavaScriptWeeklyTests(unittest.TestCase):
         archive_html = textwrap.dedent(
             """\
             <div class="issues">
-              <div class="issue"><a href="issues/787">Issue #787</a> &mdash; May 26, 2026</div>
-              <div class="issue"><a href="issues/786">Issue #786</a> &mdash; May 19, 2026</div>
+              <div class="issue-card">
+                <span class="issue-ref">#787</span>
+                <span class="issue-subject"><a href="/issues/787">Staged Publishing for npm Packages Goes Live</a></span>
+                <span class="issue-date">2026-05-26</span>
+              </div>
+              <div class="issue-card">
+                <span class="issue-ref">#786</span>
+                <span class="issue-subject"><a href="/issues/786">Dr. Axel's blog is gone for now</a></span>
+                <span class="issue-date">2026-05-19</span>
+              </div>
             </div>
             """
         )

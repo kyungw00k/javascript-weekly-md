@@ -141,10 +141,12 @@ class _ArchiveParser(HTMLParser):
         if self._issue_depth:
             if tag not in VOID_TAGS:
                 self._issue_depth += 1
+            # Assumes the first <a> inside an issue-card is the subject link.
+            # A thumbnail link preceding the subject would break this assumption.
             if tag == "a" and not self._href:
                 self._href = attrs_dict.get("href", "")
             return
-        if tag == "div" and "issue" in classes:
+        if tag == "div" and "issue-card" in classes:
             self._issue_depth = 1
             self._href = ""
             self._parts = []
@@ -162,14 +164,12 @@ class _ArchiveParser(HTMLParser):
 
     def _finish_issue(self) -> None:
         text = _normalize_inline(" ".join(self._parts))
-        match = re.search(
-            r"Issue\s+#?\s*(\d+).*?([A-Z][a-z]+ \d{1,2}, \d{4})",
-            text,
-        )
-        if not match or not self._href:
+        if not self._href:
             return
-        issue_number = match.group(1)
-        published_at = _parse_issue_date_label(match.group(2))
+        issue_number = _issue_number_from_url(self._href) or _issue_number_from_text(text)
+        published_at = _issue_date_from_text(text)
+        if not issue_number or not published_at:
+            return
         self.issues.append(
             IssueSource(
                 title=f"JavaScript Weekly Issue {issue_number}",
@@ -980,15 +980,22 @@ def _parse_iso_datetime(value: str) -> datetime | None:
 def _parse_issue_date_label(value: str) -> datetime | None:
     if not value:
         return None
-    parsed = datetime.strptime(value, "%B %d, %Y")
-    return parsed.replace(tzinfo=timezone.utc)
+    for fmt in ("%Y-%m-%d", "%B %d, %Y"):
+        try:
+            return datetime.strptime(value, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
 
 
 def _issue_date_from_text(text: str) -> datetime | None:
-    match = re.search(r"([A-Z][a-z]+ \d{1,2}, \d{4})", text)
-    if not match:
-        return None
-    return _parse_issue_date_label(match.group(1))
+    # "Month DD, YYYY" is checked before ISO dates: parse_article's html fallback
+    # can otherwise match a stray ISO date embedded in article body code.
+    for pattern in (r"[A-Z][a-z]+ \d{1,2}, \d{4}", r"\d{4}-\d{2}-\d{2}"):
+        match = re.search(pattern, text)
+        if match:
+            return _parse_issue_date_label(match.group(0))
+    return None
 
 
 def _issue_number_from_url(url: str) -> str:

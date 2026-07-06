@@ -47,7 +47,7 @@ jobs:
 
           sources = [
               ("https://cprss.s3.amazonaws.com/javascriptweekly.com.xml", (b"<rss", b"<?xml")),
-              ("https://javascriptweekly.com/issues", (b"Archives", b"Issue #")),
+              ("https://javascriptweekly.com/issues", (b"JavaScript Weekly", b"issue-card")),
           ]
           for url, expected_markers in sources:
               request = Request(
