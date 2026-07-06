@@ -2,6 +2,8 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-06-30 - Will npm v12 reject your .npmrc?](2026-06-30.md) - JavaScript Weekly — Issue #792
+- [2026-06-23 - Babel 8.0, Vite 8.1, and TypeScript 7.0 RC](2026-06-23.md) - JavaScript Weekly — Issue #791
 - [2026-06-16 - JavaScript Weekly Issue 790: June 16, 2026](2026-06-16.md)
 - [2026-06-09 - JavaScript Weekly Issue 789: June 9, 2026](2026-06-09.md)
 - [2026-06-02 - JavaScript Weekly Issue 788: June 2, 2026](2026-06-02.md)
