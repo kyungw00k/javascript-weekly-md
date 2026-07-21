@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-07-21 - The coding challenge you don't want to pass](2026-07-21.md) - JavaScript Weekly — Issue #795
 - [2026-07-14 - npm 12, TypeScript 7, and Bun in Rust](2026-07-14.md) - JavaScript Weekly — Issue #794
 - [2026-07-07 - What's new in ECMAScript 2026 (and usable today)](2026-07-07.md) - JavaScript Weekly — Issue #793
 - [2026-06-30 - Will npm v12 reject your .npmrc?](2026-06-30.md) - JavaScript Weekly — Issue #792
