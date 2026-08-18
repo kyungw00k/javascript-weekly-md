@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-08-11 - Shipping less JavaScript with Baseline](2026-08-11.md) - JavaScript Weekly — Issue #798
 - [2026-08-04 - Reimplementing htmx from scratch](2026-08-04.md) - JavaScript Weekly — Issue #797
 - [2026-07-28 - Anders Hejlsberg demos TypeScript 7's 10x speedup](2026-07-28.md) - JavaScript Weekly — Issue #796
 - [2026-07-21 - The coding challenge you don't want to pass](2026-07-21.md) - JavaScript Weekly — Issue #795
