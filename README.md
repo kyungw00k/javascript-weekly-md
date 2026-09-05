@@ -56,7 +56,7 @@ python3 -m unittest discover -s tests
 - Runner: `ubuntu-latest`
 - Network: public outbound internet from the GitHub-hosted runner
 - Push trigger: archives every archive-listed JavaScript Weekly issue when pushed to `main`; existing files are skipped
-- Schedule: every Tuesday at 13:30 UTC, using the same archive-listed incremental path
+- Schedule: every Wednesday at 03:00 UTC, using the same archive-listed incremental path. JavaScript Weekly publishes on Tuesdays between roughly 14:00 and 18:00+ UTC, so the run is offset to the next day to guarantee the new issue is already live and listed in the RSS feed/archive.
 - Manual inputs: `newsletter_url` for one issue, or `archive_year` for archive-listed issues from a different year
 - Secrets: none
 - Commit scope: generated issue Markdown files and the archive index
