@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-09-08 - When 8 chunks weigh more than 355](2026-09-08.md) - JavaScript Weekly — Issue #801
 - [2026-09-01 - How to fit Minesweeper into 247 bytes](2026-09-01.md) - JavaScript Weekly — Issue #800
 - [2026-08-25 - Bun 1.4 is (finally) fresh out of the oven](2026-08-25.md) - JavaScript Weekly — Issue #799
 - [2026-08-11 - Shipping less JavaScript with Baseline](2026-08-11.md) - JavaScript Weekly — Issue #798
