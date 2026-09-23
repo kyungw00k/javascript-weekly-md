@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-09-22 - JavaScript desktop apps in under 10MB](2026-09-22.md) - JavaScript Weekly — Issue #803
 - [2026-09-15 - Functional programming jargon, mapped out](2026-09-15.md) - JavaScript Weekly — Issue #802
 - [2026-09-08 - When 8 chunks weigh more than 355](2026-09-08.md) - JavaScript Weekly — Issue #801
 - [2026-09-01 - How to fit Minesweeper into 247 bytes](2026-09-01.md) - JavaScript Weekly — Issue #800
