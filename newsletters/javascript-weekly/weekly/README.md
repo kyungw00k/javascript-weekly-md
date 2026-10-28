@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-10-27 - Rebuilding the original GTA engine in JavaScript](2026-10-27.md) - JavaScript Weekly — Issue #808
 - [2026-10-20 - The up to 8x faster Rust port of TypeScript](2026-10-20.md) - JavaScript Weekly — Issue #807
 - [2026-10-13 - Ryan Dahl: 'Why reimplement Node? It works.'](2026-10-13.md) - JavaScript Weekly — Issue #806
 - [2026-10-06 - Why don't more developers 'use the platform'?](2026-10-06.md) - JavaScript Weekly — Issue #805
