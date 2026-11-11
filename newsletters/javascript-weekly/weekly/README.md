@@ -2,6 +2,7 @@
 
 Generated Markdown archive from JavaScript Weekly issue pages.
 
+- [2026-11-10 - How X (Twitter) is rebuilding its web app](2026-11-10.md) - JavaScript Weekly — Issue #810
 - [2026-11-03 - What Claude spends building with 12 JavaScript stacks](2026-11-03.md) - JavaScript Weekly — Issue #809
 - [2026-10-27 - Rebuilding the original GTA engine in JavaScript](2026-10-27.md) - JavaScript Weekly — Issue #808
 - [2026-10-20 - The up to 8x faster Rust port of TypeScript](2026-10-20.md) - JavaScript Weekly — Issue #807
